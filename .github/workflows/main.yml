@@ -25,7 +25,11 @@ jobs:
           curl --request GET --url https://api.cloudsmith.io/v1/user/self/ --header "X-Api-Key:Bearer $token" --header 'accept: application/json'
                     
           echo "CLOUDSMITH_API_KEY=$token" >> $GITHUB_ENV
-   
+          
+      - name: Build package
+        run: |
+          python setup.py sdist bdist_wheel
+          
       - name : Push
     # runs-on: ubuntu-latest
     # name: Python Push Demo
@@ -40,4 +44,4 @@ jobs:
          format: "python"
          owner: "testcheck-HrHX"
          repo: "new1"
-         file: "mypackage-0.1.tar.gz"
+         file: "dist/mypackage-0.1.tar.gz"
