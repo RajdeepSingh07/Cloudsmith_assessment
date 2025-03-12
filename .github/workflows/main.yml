@@ -38,7 +38,7 @@ jobs:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
           command: "push"
           format: "npm"
-          owner: "cloudsmith"
+          owner: "testcheck-HrHX"
           repo: "new"
           republish: "true" # needed ONLY if version is not changing
           file: "raj1-1.0.0.tgz"
