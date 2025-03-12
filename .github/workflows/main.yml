@@ -40,5 +40,4 @@ jobs:
           format: "npm"
           owner: "testcheck-HrHX"
           repo: "new"
-          republish: "true" # needed ONLY if version is not changing
           file: "raj1-1.0.0.tgz"
