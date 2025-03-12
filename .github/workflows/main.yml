@@ -39,5 +39,5 @@ jobs:
          command: "push"
          format: "python"
          owner: "testcheck-HrHX"
-         repo: "new"
+         repo: "new1"
          file: "mypackage-0.1.tar.gz"
