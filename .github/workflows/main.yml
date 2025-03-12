@@ -1,0 +1,36 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  id-token: write 
+  contents: read    
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate with Cloudsmith
+        env:
+          CLOUDSMITH_OIDC_AUDIENCE: "https://cloudsmith.io"
+        run: |
+          export CLOUDSMITH_OIDC_TOKEN=$(curl -sL -X POST "https://oidc.cloudsmith.io/token" \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"audience": "'"$CLOUDSMITH_OIDC_AUDIENCE"'"}' | jq -r .token)
+
+          echo "CLOUDSMITH_OIDC_TOKEN=$CLOUDSMITH_OIDC_TOKEN" >> $GITHUB_ENV
+
+      - name: Verify Authentication
+        run: |
+          curl -H "Authorization: Bearer $CLOUDSMITH_OIDC_TOKEN" \
+               -H "Accept: application/json" \
+               https://api.cloudsmith.io/v1/user/
